@@ -15,8 +15,9 @@ class UserManager(BaseUserManager):
 
         user = self.model(email=email, **extra_fields)
         user.set_password(password) # для хуширования пароля
+        user.create_activation_code()  # вызываем функцию для создания кода
         user.save(using=self._db)
-        user.create_activation_cond() # вызываем функцию для создания кода
+
         return user
 
     def create_user(self, email, password, **extra_fields):
@@ -53,7 +54,7 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
-    def create_activation_cond(self):
+    def create_activation_code(self):
         import uuid
         code = str(uuid.uuid4()) # метод для генирация кода
         self.activation_code = code
