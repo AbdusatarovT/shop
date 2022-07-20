@@ -2,7 +2,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
-# Create your models here.
+
 
 
 class UserManager(BaseUserManager):
@@ -12,7 +12,6 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError("The given email must be set")
         email = self.normalize_email(email)
-
         user = self.model(email=email, **extra_fields)
         user.set_password(password) # для хуширования пароля
         user.create_activation_code()  # вызываем функцию для создания кода
@@ -58,4 +57,5 @@ class CustomUser(AbstractUser):
         import uuid
         code = str(uuid.uuid4()) # метод для генирация кода
         self.activation_code = code
+
 

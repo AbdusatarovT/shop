@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import IsAuthenticated
 
@@ -48,5 +49,21 @@ class ChangePasswordView(APIView):
         serializers.is_valid(raise_exception=True)
         serializers.set_new_password()
         return Response('Пароль успешно обнавлен!')
+
+
+# для выхода
+class LogOutApiView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            user = request.user
+            Token.object.filter(user=user).delete()
+            return Response('Вы успешно разлогинелись!')
+        except:
+            return Response(status=403)
+
+
+
 
 
