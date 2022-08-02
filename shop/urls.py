@@ -22,6 +22,7 @@ from drf_yasg.views import get_schema_view
 
 from applications.account.views import ActivationView
 
+
 schema_view = get_schema_view(
     openapi.Info(
         title='Python 21 shop',
@@ -38,6 +39,7 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger')),
     path('api/v1/account/', include('applications.account.urls')),
     path('api/v1/product/', include('applications.product.urls')),
+    path('api/v1/order/', include('applications.cart.urls')),
     #
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # для отображения картинок

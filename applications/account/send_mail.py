@@ -12,6 +12,16 @@ def send_confirmation_email(code, email):
     )
 
 
+
+
+def forgot_password_email(code, email):
+    send_mail(
+        'Восстановление пароля',
+        f'Ваш код подтверждения: {code}',
+        'lgtahir93@gmail.com',
+        [email]
+    )
+
 # def send_resetpassword_email(code, email):
 #     code = generation_code()
 #     send_mail(
