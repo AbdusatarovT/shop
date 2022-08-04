@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from applications.product.models import Category, Product, Image, Rating, Comment
+from applications.spam.tasks import spam_email2
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -60,8 +61,7 @@ class ProductSerializer(serializers.ModelSerializer):
         except ZeroDivisionError:
             pass
         return representation
-        # return representation
-    # TODO: Отобразить рейтинг
+
 
     def create(self, validated_data):
         requests = self.context.get('request')
@@ -70,6 +70,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
         for image in images.getlist('images'):
             Image.objects.create(product=product, image=image)
+        spam_email2.delay(body=product.name)
 
         return product
 

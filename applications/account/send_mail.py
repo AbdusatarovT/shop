@@ -22,11 +22,10 @@ def forgot_password_email(code, email):
         [email]
     )
 
-# def send_resetpassword_email(code, email):
-#     code = generation_code()
-#     send_mail(
-#         'Reset Password from shop',
-#         full_link,
-#         'lgtahir93@gmail.com',
-#         [email]
-#     )
+def send_order_email(text, email):
+    send_mail(
+        'Подтверждения заказа!',
+        f'Ваш заказ: {text}',
+        'lgtahir93@gmail.com',
+        [email]
+    )
